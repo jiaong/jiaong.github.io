@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>win 10配置Git</title>
+    <url>/2020/01/01/win%2010%E9%85%8D%E7%BD%AEGit/</url>
+    <content><![CDATA[<h5 id="一、Git配置"><a href="#一、Git配置" class="headerlink" title="一、Git配置"></a>一、Git配置</h5><ol>
+<li>下载和安装msysGit（git for windows、Git Bash）</li>
+<li>检查是否有ssh key 设置 <code>cd ~/.ssh</code> 或 <code>cd .ssh</code></li>
+<li>使用Git bash 生成新的ssh key<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line"># 配置用户</span><br><span class="line">$ git config --global user.name &quot;jiaong&quot;</span><br><span class="line">$ git config --global user.email jiaong.yy@gmail.com</span><br><span class="line"># 生成ssh公私钥</span><br><span class="line">$ ssh-keygen -t rsa -C &quot;jiaong.yy@gmail.com&quot;</span><br><span class="line"># 一路按回车键默认，生成密钥和公钥</span><br><span class="line"># 文件路径 C:\Users\Administrator\.ssh </span><br><span class="line"># 添加ssh key 到GitHub，步骤：登录GitHub→Settings→SSH kyes→Add SSH key</span><br><span class="line"># 复制公钥C:\Users\Administrator\.ssh\id_rsa.pub 里的内容</span><br><span class="line"># Title自定义，将公钥粘贴到GitHub中Add an SSH key的key输入框，最后“Add Key”。</span><br><span class="line"># 测试ssh keys是否设置成功。</span><br><span class="line">$ ssh -T git@github.com</span><br><span class="line">$ cd H:&#x2F;workspace&#x2F;booltest</span><br><span class="line">#   初始化仓库</span><br><span class="line">#   我的以前已经初始化，不需要</span><br><span class="line">$ git init</span><br><span class="line">#   添加远程仓库</span><br><span class="line">$ git remote add origin git@github.com:jiaong&#x2F;test-ssh-key.git</span><br><span class="line">#   今天使用Git 添加远程github仓库的时候提示错误：fatal: remote origin already exists. </span><br><span class="line">#   1. 删除远程仓库</span><br><span class="line">$ git remote rm origin</span><br><span class="line">#   2. 再添加远程仓库</span><br><span class="line">$ git remote add origin git@github.com:jiaong&#x2F;test-ssh-key.git</span><br><span class="line">#   上传远程仓库</span><br><span class="line">#   上传仓库下的所有文件</span><br><span class="line">$ git add .</span><br><span class="line">#   提交上传说明</span><br><span class="line">$ git commit -m &quot;上传说明&quot;</span><br><span class="line">#   提交到GitHub</span><br><span class="line">$ git push -u origin master</span><br><span class="line">#   执行这个命令行后会弹出下面的错误，</span><br><span class="line">#   出现错误的主要原因是github中的README.md文件不在本地代码目录中</span><br><span class="line">To github.com:jiaong&#x2F;test-ssh-key.git</span><br><span class="line"> ! [rejected]        master -&gt; master (fetch first)</span><br><span class="line">error: failed to push some refs to &#39;git@github.com:jiaong&#x2F;test-ssh-key.git&#39;</span><br><span class="line">hint: Updates were rejected because the remote contains work that you do</span><br><span class="line">hint: not have locally. This is usually caused by another repository pushing</span><br><span class="line">hint: to the same ref. You may want to first integrate the remote changes</span><br><span class="line">hint: (e.g., &#39;git pull ...&#39;) before pushing again.</span><br><span class="line">hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.</span><br><span class="line"># 可以通过以下命令解决上面的错误【注：pull&#x3D;fetch+merge】</span><br><span class="line">$ git pull --rebase origin master</span><br><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="二、-用git命令行添加多个远程仓库"><a href="#二、-用git命令行添加多个远程仓库" class="headerlink" title="二、 用git命令行添加多个远程仓库"></a>二、 用git命令行添加多个远程仓库</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git remote add note git@github.com:jiaong&#x2F;markdownNote.git</span><br><span class="line"># 查看远程仓库</span><br><span class="line">$ git remote -v</span><br><span class="line"># 切换到其他本地仓库目录下</span><br><span class="line">$ cd G:&#x2F;data&#x2F;markdown</span><br><span class="line"># 初始化本地仓库</span><br><span class="line">$ git init</span><br><span class="line"></span><br><span class="line"># 再关联远程仓库</span><br><span class="line">$ git remote add note git@github.com:jiaong&#x2F;markdownNote.git</span><br><span class="line">#   上传远程仓库</span><br><span class="line">#   上传仓库下的所有文件</span><br><span class="line">$ git add .</span><br><span class="line">#   提交上传说明</span><br><span class="line">$ git commit -m &quot;上传说明&quot;</span><br><span class="line">#   提交到GitHub</span><br><span class="line">$ git push -u note master</span><br></pre></td></tr></table></figure>
+
+<h5 id="三、-一个github账户多台电脑代码提交"><a href="#三、-一个github账户多台电脑代码提交" class="headerlink" title="三、 一个github账户多台电脑代码提交"></a>三、 一个github账户多台电脑代码提交</h5><p>在实际工作生活中，我们可能不一定仅仅在一台电脑上编码，比如：我们平时在单位电脑1上写代码，提交代码到github账户，而我们也可能会在在家里的电脑2上继续工作，提交代码，这样就是在不同的电脑上提交代码到同一个github账户，同时在每一台电脑上都保持和github账户的一致，该怎么办呢？</p>
+<ol>
+<li>首先在电脑2上完成git的安装和配置：<br>和在电脑1上的配置一样，按照本系列git学习1中的教程安装配置，其中用户名和邮箱可以依然使用电脑1的用户名和邮箱，也可以设置为其他用户名和邮箱，均无影响。</li>
+<li>然后需要在电脑2上创建另一个SSH Key，保证远程github能够识别电脑2打开Shell（Windows下打开Git Bash），输入<br><code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code><br>然后一路回车，无需设置密码。<br>然后在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，<br>id_rsa是私钥，不能泄露，id_rsa.pub是公钥，可以放心告诉别人<br>登陆Github，进入settings,点击SSH Keys,由于电脑1的SSH Key已经上传，所以可以看到已经有一个SSH Key了，这个SSH key是电脑1的，为了创建电脑2的SSH Key，点击Add SSH Key,填写任意Title，在Key文本框粘贴电脑2的id_rsa.pub文件的内容,然后点add Key。这个就设置好了</li>
+<li>将远程库克隆到本地电脑2上,进入某个目录，git bash进入命令行模式：<br><code>git clone git@github.com:NIck-Meng/gitest.git</code><br>然后进入该目录，可以看到gitest文件夹，远程的代码已经被克隆到本地电脑2上了。<br>这样就可在在电脑2上对代码进行修改、提交等操作了，每次git push将本地修改提交到远程后，远程代码就发生了改变。</li>
+<li>当在电脑1上工作时，本地代码和远程的代码发生了不一致，为了保持同步，所以需要将远程的代码同步到本地电脑1上<br><code>git fetch origin master</code><br>从远程的origin的master主分支下载最新的版本到origin/master分支上<br><code>git log -p master..origin/master</code><br>然后比较本地的master分支和origin/master分支的差别<br><code>git merge origin/master</code><br>最后进行合并</li>
+</ol>
+<p>参考文档 : <a href="https://www.cnblogs.com/Nick-M/p/5559042.html" target="_blank" rel="noopener">https://www.cnblogs.com/Nick-M/p/5559042.html</a></p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>亿寻 百度网盘不限速下载（windows）</title>
+    <url>/2020/03/01/%E4%BA%BF%E5%AF%BB%20%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E4%B8%8D%E9%99%90%E9%80%9F%E4%B8%8B%E8%BD%BD%EF%BC%88windows%EF%BC%89/</url>
+    <content><![CDATA[<p>作者：kud<br>地址：<a href="https://www.52pojie.cn/thread-1065014-1-1.html" target="_blank" rel="noopener">https://www.52pojie.cn/thread-1065014-1-1.html</a></p>
+<ul>
+<li>使用右键 下载/使用 saldl 下载</li>
+</ul>
+<p>在使用右键 下载/使用 saldl 下载 请先设置以下参数值 BDUSS、version、devuid、rand<br>及 time 。否则右键 下载/使用 saldl 下载 将不可选。</p>
+<p>获取 BDUSS、version、devuid、rand 及 time 的值</p>
+<h5 id="我的"><a href="#我的" class="headerlink" title="我的"></a>我的</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NNNmRafjZwSHZnZWo4SFdUSEItMjlzY0JzeDhES0tXUXRmQ1lQWlhKLWxzYlplSVFBQUFBJCQAAAAAAAAAAAEAAAAdP986z6bR9M~CX1~Tx8nLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKUkj16lJI9eSE</span><br></pre></td></tr></table></figure>
+
+<p>所需工具: 数据包捕获工具。这里仅以 Fiddler 为例进行说明。</p>
+<p>Fiddler<br><a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener">https://www.telerik.com/fiddler</a></p>
+<p>下载（可能需要代理）<br><a href="https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe" target="_blank" rel="noopener">https://telerik-fiddler.s3.amazonaws.com/fiddler/FiddlerSetup.exe</a></p>
+<p>安装<br>双击 FiddlerSetup.exe，单击 I Agree 按钮，单击 Install 进行安装。</p>
+<p>设置<br>在开始屏幕或开始菜单中，单击 Fiddler 以打开 Fiddler 。单击菜单<br>Tools/Options/HTTPS，选中 Decrypt HTTPS traffic，在打开的对话框中单击 Yes，在打<br>开的 安全警告 对话框中单击 是（Y），在打开的对话框中单击 是（Y），在打开的<br>TrustCert uccess 对话框中单击 确定，最后单击 Option 对话框中的 OK 按钮。</p>
+<p>打开 百度网盘客户端，并登录，单击 设置 图标，单击 设置/传输，将 代理设置 改为<br>使用IE代理，最后单击 确定。</p>
+<p>单击 百度网盘客户端 的刷新按钮，当 Fiddler 左侧出现黑色线程时，单击 Fiddler 菜单<br>Edit/Find，在打开的 Find Sessions 对话框中的 Find 输入栏中，键入 &amp;rand= ，单击<br>Find Sessions 按钮。右键单击 Fiddler 左侧任意一个高亮的线程，选择<br>Copy/Headers Only。将复制的结果粘贴到记事本，并查找 version、devuid、rand、time<br>及 BDUSS 的值。</p>
+<p>比如 version 的值为<br>version= 之后，且 &amp; 之前的所有字符。<br>devuid、rand 和 time 的值以此类推。</p>
+<p>BDUSS 的值为<br>BDUSS= 之后，且 ; (如果有) 之前所有字符。</p>
+<p>将 百度网盘客户端 的 代理设置 恢复为默认值，即 不使用代理，并关闭 Fiddler。</p>
+<p>打开 亿寻，单击 登录 按钮，在打开的 登录 对话框中单击 Cookie 按钮，将上面获取的<br>BDUSS 值粘贴到 请输入 Cookie 输入栏，最后点击 登录 按钮进行登录。</p>
+<p>登录成功后，单击菜单栏 工具/下载参数，将上面获取到的 version、devuid、rand 及<br>time 值分别复制到对应的编辑栏中，单击 确定。</p>
+<p>注意：下次登录时，请使用 切换账号 按钮进行登录，以避免重新设置。<br>注意：在更新到新版本时，可将 config 文件夹里的 SAM 和 Download.ini 文件复制到新<br>版本的 config 文件夹里，可避免重新设置以上参数。<br>注意：当使用 aria2 无法下载时，请尝试使用 saldl 下载。<br>注意：当下载目录有与将要下载的文件同名的文件时，saldl 不会继续下载。<br>注意: 当此方式下载速度非常慢或提示 速度受限 时，应立即停止使用此方式下载。当提示<br>速度受限 时，一般 24 小时后可以恢复正常。</p>
+<p>下载时，如果出现验证码，尽管输便是，每个文件都对应一个验证码，这正常。<br>下一版解决验证码</p>
+<p>深更半夜建议使用快捷下载，其他时段使用分享下载。</p>
+<ul>
+<li>连接 raw.githubusercontent.com 出错</li>
+</ul>
+<p>如果出现无法连接 raw.githubusercontent.com 错误时，检查更新将失败。</p>
+<p>可定期手动进行检查。目前版本无视这个错误，作者下个版本将会修复。</p>
+<p>使用前请仔细阅读 README 文件。</p>
+]]></content>
+      <tags>
+        <tag>windows</tag>
+        <tag>百度云</tag>
+      </tags>
+  </entry>
+</search>
