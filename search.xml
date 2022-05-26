@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo 添加标签和分类</title>
+    <url>/2022/05/26/Hexo%E6%B7%BB%E5%8A%A0%E6%A0%87%E7%AD%BE%E5%92%8C%E5%88%86%E7%B1%BB/</url>
+    <content><![CDATA[<h1 id="Hexo-添加标签和分类"><a href="#Hexo-添加标签和分类" class="headerlink" title="Hexo 添加标签和分类"></a>Hexo 添加标签和分类</h1><h5 id="创建-“分类”-选项"><a href="#创建-“分类”-选项" class="headerlink" title="创建 “分类” 选项"></a>创建 “分类” 选项</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<h5 id="source-目录下会生成categories-文件夹，里面有index-md文件，默认内容"><a href="#source-目录下会生成categories-文件夹，里面有index-md文件，默认内容" class="headerlink" title="source 目录下会生成categories 文件夹，里面有index.md文件，默认内容"></a><code>source</code> 目录下会生成<code>categories</code> 文件夹，里面有<code>index.md</code>文件，默认内容</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line"><span class="built_in">date</span>: 2022-04-22 14:47:40</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改为"><a href="#修改为" class="headerlink" title="修改为"></a>修改为</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line">date: 2022-04-22 14:47:40</span><br><span class="line">type: categories</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h5 id="文章添加分类"><a href="#文章添加分类" class="headerlink" title="文章添加分类"></a>文章添加分类</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: title </span><br><span class="line">date: xxxx</span><br><span class="line">categories: xxx</span><br><span class="line">tags: xxx</span><br><span class="line">---</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="标签同理"><a href="#标签同理" class="headerlink" title="标签同理"></a>标签同理</h5>]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>excel隔行颜色不同</title>
+    <url>/2022/04/25/excel%E9%9A%94%E8%A1%8C%E9%A2%9C%E8%89%B2%E4%B8%8D%E5%90%8C/</url>
+    <content><![CDATA[<ol>
+<li>全选表格，点击条件格式</li>
+<li>新建规则</li>
+<li>选择“使用公式确定要设置格式的单元格”。</li>
+<li>输入公式<code>=mod(row(),2)</code> ，选择格式，填充颜色。</li>
+</ol>
+<p>如果是要隔列设置不同的颜色，那就把刚才的公式改成：<code>=mod(column(),2)</code>，其他步骤都一样。</p>
+<p><code>=mod(row(),2)</code>，如果要设置隔一行填充两行颜色，则数值改成3，以此类推。<br>如果使用<code>=mod(row(),2)=0</code>表示行号为偶数行填充颜色.</p>
+]]></content>
+      <categories>
+        <category>office</category>
+      </categories>
+      <tags>
+        <tag>office</tag>
+      </tags>
+  </entry>
+</search>
