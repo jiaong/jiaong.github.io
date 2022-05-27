@@ -11,7 +11,14 @@
 
 <h5 id="文章添加分类"><a href="#文章添加分类" class="headerlink" title="文章添加分类"></a>文章添加分类</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: title </span><br><span class="line">date: xxxx</span><br><span class="line">categories: xxx</span><br><span class="line">tags: xxx</span><br><span class="line">---</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h5 id="标签同理"><a href="#标签同理" class="headerlink" title="标签同理"></a>标签同理</h5>]]></content>
+<h5 id="标签同理"><a href="#标签同理" class="headerlink" title="标签同理"></a>标签同理</h5><script src="https://utteranc.es/client.js"
+        repo="jiaong/jiaong.gitub.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
