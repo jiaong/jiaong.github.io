@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Linux用户管理</title>
+    <url>/2022/12/11/Linux%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h3 id="进入root账号"><a href="#进入root账号" class="headerlink" title="进入root账号"></a>进入root账号</h3><p><strong>一、添加用户</strong></p>
+<p><code>useradd 用户名</code></p>
+<p><strong>设置用户密码</strong></p>
+<p><code>passwd 用户名</code></p>
+<p><strong>二、删除账号</strong></p>
+<ol>
+<li><p>只删除用户，保留home目录</p>
+<p> <code>userdel 用户名</code></p>
+</li>
+<li><p>删除用户和home目录</p>
+<p> <code>userdel -r 用户名</code></p>
+</li>
+</ol>
+<p><strong>三、查询用户信息指令</strong></p>
+<p><code>id 用户名</code></p>
+<p><strong>四、切换用户</strong></p>
+<p><code>su 用户名</code></p>
+<p>还回原用户，输入<code>exit</code> 或<code>logout</code></p>
+<p><strong>五、查询当前用户信息</strong></p>
+<ol>
+<li><p><code>whoami</code></p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yong@localhost ~]$ <span class="built_in">whoami</span> </span><br><span class="line">yong</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>who am i</code></p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[yong@localhost ~]$ <span class="built_in">who</span> am i</span><br><span class="line">yong     pts/1        2021-11-24 10:51 (192.168.245.1)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>六、用户组</strong></p>
+<ol>
+<li><p>添加用户组</p>
+<p> <code>groupadd 用户组</code></p>
+</li>
+<li><p>删除用户组</p>
+<p> <code>groupdel 用户组</code></p>
+</li>
+<li><p>增加用户时加上用户组</p>
+<p> <code>useradd -g 用户组 用户名</code></p>
+<p> 添加用户时，没有指定用户组，会默认添加同名用户组。</p>
+</li>
+</ol>
+<p><strong>七、用户和组相关文件</strong></p>
+<ol>
+<li><p><code>/etc/passwd</code> 文件</p>
+<p> <strong>用户配置文件，记录用户的各种信息。</strong></p>
+<p> 每行的含义：<code>用户名：口令：用户标识号：组标识号：注释性描述：主目录：登录Shell</code></p>
+</li>
+<li><p><code>/etc/shadow</code> 文件</p>
+<p> <strong>口令配置文件</strong></p>
+<p> 每行的含义：<code>登录名：加密口令：最后一次修改时间：最小时间间隔：最大时间间隔：警告时间：不活动时间：失效时间：标志</code></p>
+</li>
+<li><p><code>/etc/group</code>  文件</p>
+<p> <strong>用户组配置文件，记录linux包含组的信息</strong></p>
+<p> 每行含义：<code>组名：口令：组标识号：组内用户列表</code></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>dmesg启动信息</title>
+    <url>/2022/12/11/dmesg%E5%90%AF%E5%8A%A8%E4%BF%A1%E6%81%AF/</url>
+    <content><![CDATA[<h3 id="1-搜索包含特定字符串的被检测到的硬件"><a href="#1-搜索包含特定字符串的被检测到的硬件" class="headerlink" title="1. 搜索包含特定字符串的被检测到的硬件"></a>1. 搜索包含特定字符串的被检测到的硬件</h3><p>由于‘dmesg’命令的输出实在太长了，在其中搜索某个特定的字符串是非常困难的。因此，有必要过滤出一些包含‘usb’ ‘dma’ ‘tty’ ‘memory’等字符串的日志行。grep 命令 的‘-i’选项表示忽略大小写。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dmesg | grep -i usb</span><br><span class="line">dmesg | grep -i dma</span><br><span class="line">dmesg | grep -i <span class="built_in">tty</span></span><br><span class="line">dmesg | grep -i memory</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-清空dmesg缓冲区日志"><a href="#2-清空dmesg缓冲区日志" class="headerlink" title="2. 清空dmesg缓冲区日志"></a>2. 清空dmesg缓冲区日志</h3><p>我们可以使用如下命令来清空dmesg的日志。该命令会清空dmesg环形缓冲区中的日志。但是你依然可以查看存储在<code>/var/log/dmesg</code>文件中的日志。你连接任何的设备都会产生dmesg日志输出。<br><code>dmesg -c</code></p>
+<h3 id="3-实时监控dmesg日志输出"><a href="#3-实时监控dmesg日志输出" class="headerlink" title="3. 实时监控dmesg日志输出"></a>3. 实时监控dmesg日志输出</h3><p>在某些发行版中可以使用命令<code>tail -f /var/log/dmesg</code>来实时监控dmesg的日志输出。<br><strong>查看：</strong><br><code>watch &quot;dmesg | tail -20&quot;</code></p>
+<p><strong>结论:</strong></p>
+<p>dmesg命令在系统dmesg记录实时更改或产生的情况下是非常有用的。你可以使用man dmesg来获取更多关于dmesg的信息。</p>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Win10任务栏时间显示秒</title>
+    <url>/2022/12/11/Win10%E4%BB%BB%E5%8A%A1%E6%A0%8F%E6%97%B6%E9%97%B4%E6%98%BE%E7%A4%BA%E7%A7%92/</url>
+    <content><![CDATA[<ol>
+<li>打开注册表：win+R 输入regedit</li>
+<li>找到<code>HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced</code></li>
+<li>在Advanced上新建 DWORD(32位)值，命名为：<code>ShowSecondsInSystemClock</code>，双击打开将数值数据改为1，并点击确定，关闭注册表。</li>
+<li>重启电脑，就可以实现秒的显示。如果不重启电脑，则在任务管理中找到“Windows资源管理器”，鼠标右键选择“重新启动”。</li>
+</ol>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced&quot; /v ShowSecondsInSystemClock /t REG_DWORD /d <span class="number">1</span> /f</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>excel隔行颜色不同</title>
+    <url>/2022/12/11/excel%E9%9A%94%E8%A1%8C%E9%A2%9C%E8%89%B2%E4%B8%8D%E5%90%8C/</url>
+    <content><![CDATA[<p><strong>步骤：</strong></p>
+<ol>
+<li>全选表格，点击条件格式</li>
+<li>新建规则</li>
+<li>选择“使用公式确定要设置格式的单元格”。</li>
+<li>输入公式<code>=mod(row(),2)</code> ，选择格式，填充颜色。</li>
+</ol>
+<p><strong>其他补充：</strong></p>
+<ul>
+<li><p>如果是要隔列设置不同的颜色，那就把刚才的公式改成：<code>=mod(column(),2)</code>，其他步骤都一样。</p>
+</li>
+<li><p><code>=mod(row(),2)</code>，如果要设置隔一行填充两行颜色，则数值改成3，以此类推。</p>
+</li>
+<li><p>如果使用<code>=mod(row(),2)=0</code>表示行号为偶数行填充颜色。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>office</category>
+      </categories>
+      <tags>
+        <tag>excel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>windows如何查看某个端口被谁占用</title>
+    <url>/2022/12/11/windows%E6%9F%A5%E7%9C%8B%E6%9F%90%E4%B8%AA%E7%AB%AF%E5%8F%A3%E8%A2%AB%E5%8D%A0%E7%94%A8/</url>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>netstat</td>
+<td>显示协议统计信息和当前 TCP&#x2F;IP 网络连接。</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>显示所有连接的端口和监听端口。</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>以数字形式显示地址和端口号。</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>显示拥有的与每个连接关联的进程 ID。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>开始—-&gt;运行—-&gt;cmd，或者是<code>Window+R</code>组合键，调出命令窗口</p>
+</li>
+<li><p>输入命令：<code>netstat -ano</code>，列出所有端口的情况。</p>
+</li>
+<li><p>查看被占用端口对应的PID，输入命令：<code>netstat  -aon|findstr &quot;端口号&quot;</code></p>
+</li>
+<li><p>继续输入<code>tasklist|findstr &quot;PID&quot;</code>，回车，查看是哪个进程或者程序占用了PID端口。</p>
+</li>
+<li><p>在任务管理器的进程里找到PID，手动结束对应的进程。</p>
+</li>
+<li><p>或者cmd的命令窗口中输入：<code>taskkill /f /t /im  ****.exe</code>。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>crontab 定时任务调度</title>
+    <url>/2022/12/11/crontab%20%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</url>
+    <content><![CDATA[<h3 id="crontab-定时任务调度"><a href="#crontab-定时任务调度" class="headerlink" title="crontab 定时任务调度"></a>crontab 定时任务调度</h3><table>
+<thead>
+<tr>
+<th>crontab [选项]</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>编辑crontab定时任务</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>查询crontab 任务</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>删除当前用户所有crontab任务</td>
+</tr>
+</tbody></table>
+<p>每分钟在etc执行ls -l命令，并追加到tmp目录下to.txt文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br><span class="line">*/1 **** ls -l /etc/ &gt;/tmp/to.txt</span><br></pre></td></tr></table></figure>
+
+<p>备份mysql数据库,每天凌晨02：00备份mysql数据库</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">crontab -e </span><br><span class="line">0 2 * * * mysqldump -u root -proot testdb &gt; /home/db.bak</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>路由器和二层交换机的区别</title>
+    <url>/2022/12/11/%E8%B7%AF%E7%94%B1%E5%99%A8%E4%B8%8E%E4%BA%8C%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<ol>
+<li>路由器是三层设备，交换机是二层设备。</li>
+<li>路由器根据IP寻址，交换机根据mac寻址。</li>
+<li>路由器隔离冲突域和广播域（不能转发广播），交换机隔离冲突域不隔离广播域（可以转发广播）。</li>
+<li>路由器转发速度慢，交换机转发速度快。</li>
+<li>路由器端口数目少，可以添加板卡，交换机端口数目多。</li>
+<li>路由器有串口连接外网，交换机只能连接内网。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>路由器</tag>
+        <tag>交换机</tag>
+      </tags>
+  </entry>
+</search>
